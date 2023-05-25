@@ -1,15 +1,37 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
 import FormContainer from '../components/FormContainer.jsx';
+import { useLoginMutation } from '../slices/usersApiSlice.js';
+import { setCredentials } from '../slices/authSlice.js';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [login, { isLoading }] = useLoginMutation();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    userInfo && navigate('/');
+  }, [navigate, userInfo]);
+
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log('submit');
+    try {
+      const res = await login({email, password}).unwrap();
+      dispatch(setCredentials({...res}));
+      navigate('/');
+      console.log('navigate to main page');
+    } catch (err) {
+      toast.error(err?.data?.message || err.error)
+    }
   };
 
   return (
@@ -17,38 +39,34 @@ const LoginScreen = () => {
       <h1>Sign In</h1>
 
       <Form onSubmit={submitHandler}>
-        <Form.Group className='my-2' controlId='email'>
+        <Form.Group className="my-2" controlId="email">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
-            type='email'
-            placeholder='Enter email'
+            type="email"
+            placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group className='my-2' controlId='password'>
+        <Form.Group className="my-2" controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type='password'
-            placeholder='Enter password'
+            type="password"
+            placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Button
-          type='submit'
-          variant='primary'
-          className='mt-3'
-        >
+        <Button type="submit" variant="primary" className="mt-3">
           Sign In
         </Button>
       </Form>
 
-      <Row className='py-3'>
+      <Row className="py-3">
         <Col>
-          New Customer? <Link to='/register'>Register</Link>
+          New Customer? <Link to="/register">Register</Link>
         </Col>
       </Row>
     </FormContainer>
