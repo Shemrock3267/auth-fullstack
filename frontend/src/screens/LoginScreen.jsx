@@ -25,12 +25,11 @@ const LoginScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const res = await login({email, password}).unwrap();
-      dispatch(setCredentials({...res}));
+      const res = await login({ email, password }).unwrap();
+      dispatch(setCredentials({ ...res }));
       navigate('/');
-      console.log('navigate to main page');
     } catch (err) {
-      toast.error(err?.data?.message || err.error)
+      toast.error(err?.data?.message || err.error);
     }
   };
 
