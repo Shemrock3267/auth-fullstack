@@ -14,7 +14,6 @@ import RegisterScreen from './screens/RegisterScreen.jsx';
 import ProfileScreen from './screens/ProfileScreen.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import store from './store.js';
-import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const router = createBrowserRouter(
