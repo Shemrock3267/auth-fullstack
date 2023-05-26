@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import FormContainer from '../components/FormContainer.jsx';
+import Loader from '../components/Loader.jsx';
 import { useLoginMutation } from '../slices/usersApiSlice.js';
 import { setCredentials } from '../slices/authSlice.js';
 
@@ -42,6 +43,7 @@ const LoginScreen = () => {
           <Form.Label>Email Address</Form.Label>
           <Form.Control
             type="email"
+            disabled={isLoading}
             placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -52,22 +54,28 @@ const LoginScreen = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
+            disabled={isLoading}
             placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Button type="submit" variant="primary" className="mt-3">
-          Sign In
-        </Button>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <Button type="submit" variant="primary" className="mt-3">
+              Sign In
+            </Button>
+            <Row className="py-3">
+              <Col>
+                New Customer? <Link to="/register">Register</Link>
+              </Col>
+            </Row>
+          </>
+        )}
       </Form>
-
-      <Row className="py-3">
-        <Col>
-          New Customer? <Link to="/register">Register</Link>
-        </Col>
-      </Row>
     </FormContainer>
   );
 };
