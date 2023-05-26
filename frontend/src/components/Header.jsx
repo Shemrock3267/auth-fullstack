@@ -1,4 +1,4 @@
-import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
+import { $locale } from '../utils/index';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const Header = () => {
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>MERN Auth</Navbar.Brand>
+            <Navbar.Brand>{$locale('APP_TITLE')}</Navbar.Brand>
           </LinkContainer>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -38,10 +39,12 @@ const Header = () => {
                 <>
                   <NavDropdown title={userInfo.name} id="username">
                     <LinkContainer to="/profile">
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                      <NavDropdown.Item>
+                        {$locale('PROFILE_TITLE')}
+                      </NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
+                      {$locale('LOGOUT_DESC')}
                     </NavDropdown.Item>
                   </NavDropdown>
                 </>
@@ -49,12 +52,12 @@ const Header = () => {
                 <>
                   <LinkContainer to="/login">
                     <Nav.Link>
-                      <FaSignInAlt /> Sign In
+                      <FaSignInAlt /> {$locale('SIGN_IN_DESC')}
                     </Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/register">
                     <Nav.Link>
-                      <FaSignOutAlt /> Sign up
+                      <FaSignOutAlt /> {$locale('SIGN_UP_DESC')}
                     </Nav.Link>
                   </LinkContainer>
                 </>

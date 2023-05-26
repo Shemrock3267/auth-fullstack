@@ -8,6 +8,7 @@ import FormContainer from '../components/FormContainer.jsx';
 import Loader from '../components/Loader.jsx';
 import { useRegisterMutation } from '../slices/usersApiSlice.js';
 import { setCredentials } from '../slices/authSlice.js';
+import { $locale } from '../utils/index.js';
 
 const RegisterScreen = () => {
   const [name, setName] = useState('');
@@ -29,7 +30,7 @@ const RegisterScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error($locale('TOAST_PASSWORD_MATCH_ERR_DESC'));
     } else {
       try {
         const res = await register({ name, email, password }).unwrap();
@@ -42,48 +43,48 @@ const RegisterScreen = () => {
 
   return (
     <FormContainer>
-      <h1>Sign Up</h1>
+      <h1>{$locale('SIGN_UP_DESC')}</h1>
 
       <Form onSubmit={submitHandler}>
         <Form.Group className="my-2" controlId="name">
-          <Form.Label>Your Name</Form.Label>
+          <Form.Label>{$locale('NAME_DESC')}</Form.Label>
           <Form.Control
             type="text"
             disabled={isLoading}
-            placeholder="Enter name"
+            placeholder={$locale('NAME_PLACEHOLDER')}
             value={name}
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
         <Form.Group className="my-2" controlId="email">
-          <Form.Label>Email Address</Form.Label>
+          <Form.Label>{$locale('EMAIL_DESC')}</Form.Label>
           <Form.Control
             type="email"
             disabled={isLoading}
-            placeholder="Enter email"
+            placeholder={$locale('EMAIL_PLACEHOLDER')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
         <Form.Group className="my-2" controlId="password">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>{$locale('PASSWORD_DESC')}</Form.Label>
           <Form.Control
             type="password"
             disabled={isLoading}
-            placeholder="Enter password"
+            placeholder={$locale('PASSWORD_PLACEHOLDER')}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
         <Form.Group className="my-2" controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
+          <Form.Label>{$locale('CONFIRM_PASSWORD_DESC')}</Form.Label>
           <Form.Control
             type="password"
             disabled={isLoading}
-            placeholder="Confirm Password"
+            placeholder={$locale('CONFIRM_PASSWORD_DESC')}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
@@ -94,12 +95,13 @@ const RegisterScreen = () => {
         ) : (
           <>
             <Button type="submit" variant="primary" className="mt-3">
-              Sign Up
+              {$locale('SIGN_UP_DESC')}
             </Button>
 
             <Row className="py-3">
               <Col>
-                Already have an account? <Link to="/login">Login</Link>
+                {$locale('ALREADY_SIGNED_UP_DESC')}{' '}
+                <Link to="/login">{$locale('LOGIN_DESC')}</Link>
               </Col>
             </Row>
           </>
