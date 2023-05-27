@@ -71,7 +71,8 @@ const LoginScreen = () => {
             </Button>
             <Row className="py-3">
               <Col>
-                {$locale('REGISTER_USER_DESC')} <Link to="/register">{$locale('BUTTON_REGISTER_DESC')}</Link>
+                {$locale('REGISTER_USER_DESC')}{' '}
+                <Link to="/register">{$locale('BUTTON_REGISTER_DESC')}</Link>
               </Col>
             </Row>
           </>

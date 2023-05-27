@@ -100,7 +100,8 @@ const RegisterScreen = () => {
 
             <Row className="py-3">
               <Col>
-                {$locale('ALREADY_SIGNED_UP_DESC')} <Link to="/login">{$locale('LOGIN_DESC')}</Link>
+                {$locale('ALREADY_SIGNED_UP_DESC')}{' '}
+                <Link to="/login">{$locale('LOGIN_DESC')}</Link>
               </Col>
             </Row>
           </>
