@@ -30,7 +30,7 @@ const RegisterScreen = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error($locale('TOAST_PASSWORD_MATCH_ERR_DESC'));
     } else {
       try {
         const res = await register({ name, email, password }).unwrap();
